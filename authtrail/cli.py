@@ -48,6 +48,7 @@ def parse_offset(value):
 def main(argv=None):
     parser = argparse.ArgumentParser(description='Investigate exported SSH authentication logs offline.')
     parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('--max-input-bytes', type=positive, default=268435456, help='maximum total decompressed input bytes (default 256 MiB)')
     parser.add_argument('--max-events', type=positive, default=100000, help='abort above this event count (default 100000)')
     parser.add_argument('--max-line-bytes', type=positive, default=65536)
     parser.add_argument('logs', nargs='+', type=Path, help='auth.log / secure files, including .gz rotations')
@@ -91,24 +92,30 @@ def main(argv=None):
         parser.error('report paths must differ from input logs, configuration, and from each other')
     try:
         check_outputs(inputs, outputs)
-    except ValueError as exc:
+    except (ValueError, OSError) as exc:
         parser.error(str(exc))
     diagnostics = []
     file_stats = []
     stats = dict(lines=0, parsed=0, ignored=0, malformed=0, excluded=0, duplicates=0)
     events, seen = [], Counter()
+    input_bytes = 0
     try:
         for path in args.logs:
+            if not path.is_file():
+                raise ValueError(f'{path}: input must be a regular file')
             before = stats.copy()
             occurrences = Counter()
             opener = gzip.open if path.suffix == '.gz' else open
-            with opener(path, 'rt', encoding='utf-8', errors='replace') as stream:
+            with opener(path, 'rt', encoding='utf-8', errors='strict') as stream:
                 number = 0
                 while True:
                     raw = stream.readline(args.max_line_bytes + 1)
                     if not raw:
                         break
                     number += 1
+                    input_bytes += len(raw.encode('utf-8'))
+                    if input_bytes > args.max_input_bytes:
+                        raise ValueError('total decompressed input limit exceeded')
                     if len(raw.encode('utf-8')) > args.max_line_bytes:
                         raise ValueError(f'{path}:{number}: line exceeds configured limit')
                     stats['lines'] += 1
@@ -159,7 +166,7 @@ def main(argv=None):
                       distributed_sources=args.distributed_sources, distributed_failures=args.distributed_failures,
                       distributed_window=args.distributed_window, incident_gap=args.incident_gap,
                       group_by=args.group_by, strict=args.strict, min_events=args.min_events, max_events=args.max_events,
-                      max_line_bytes=args.max_line_bytes), stats=stats, input_files=file_stats, diagnostics=diagnostics,
+                      max_line_bytes=args.max_line_bytes, max_input_bytes=args.max_input_bytes), stats=stats, input_files=file_stats, diagnostics=diagnostics,
                       findings=findings, incidents=group_incidents(findings, args.incident_gap, args.group_by))
         if args.json_path:
             from .reporting import compact_report

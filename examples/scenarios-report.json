@@ -1,5 +1,5 @@
 {
-  "tool_version": "0.4.0",
+  "tool_version": "0.4.1",
   "schema_version": 3,
   "configuration": {
     "year": 2026,
@@ -21,7 +21,8 @@
     "strict": false,
     "min_events": null,
     "max_events": 100000,
-    "max_line_bytes": 65536
+    "max_line_bytes": 65536,
+    "max_input_bytes": 268435456
   },
   "stats": {
     "lines": 52,
@@ -1269,15 +1270,9 @@
             1
           ],
           "shared_sources": [
-            "198.51.100.1",
-            "198.51.100.2",
-            "198.51.100.3",
-            "198.51.100.4",
-            "198.51.100.5"
+            "198.51.100.1"
           ],
-          "shared_accounts": [
-            "deploy"
-          ]
+          "shared_accounts": []
         },
         {
           "findings": [
@@ -1287,21 +1282,7 @@
           "shared_sources": [
             "198.51.100.1"
           ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            1,
-            2
-          ],
-          "shared_sources": [
-            "198.51.100.1"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
+          "shared_accounts": []
         },
         {
           "findings": [
@@ -1309,79 +1290,9 @@
             3
           ],
           "shared_sources": [
-            "198.51.100.1",
-            "198.51.100.2",
-            "198.51.100.3",
-            "198.51.100.4",
-            "198.51.100.5"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            1,
-            3
-          ],
-          "shared_sources": [
-            "198.51.100.1",
-            "198.51.100.2",
-            "198.51.100.3",
-            "198.51.100.4",
-            "198.51.100.5"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            2,
-            3
-          ],
-          "shared_sources": [
             "198.51.100.1"
           ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            0,
-            4
-          ],
-          "shared_sources": [
-            "198.51.100.1"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            1,
-            4
-          ],
-          "shared_sources": [
-            "198.51.100.1"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            2,
-            4
-          ],
-          "shared_sources": [
-            "198.51.100.1"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
+          "shared_accounts": []
         },
         {
           "findings": [
@@ -1391,9 +1302,7 @@
           "shared_sources": [
             "198.51.100.1"
           ],
-          "shared_accounts": [
-            "deploy"
-          ]
+          "shared_accounts": []
         }
       ]
     },

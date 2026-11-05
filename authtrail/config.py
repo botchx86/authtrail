@@ -8,11 +8,20 @@ DEFAULTS = dict(window=300, failures=5, users=5, distributed_sources=5,
                 exclude_source=[], exclude_user=[])
 
 
+def unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f'duplicate configuration key: {key}')
+        result[key] = value
+    return result
+
+
 def load_config(path):
     if path is None:
         return deepcopy(DEFAULTS)
     with open(path, encoding='utf-8') as stream:
-        data = json.load(stream)
+        data = json.load(stream, object_pairs_hook=unique_object)
     if not isinstance(data, dict):
         raise ValueError('configuration must be a JSON object')
     unknown = set(data) - DEFAULTS.keys()

@@ -1,5 +1,5 @@
 {
-  "tool_version": "0.4.0",
+  "tool_version": "0.4.1",
   "schema_version": 3,
   "configuration": {
     "year": 2026,
@@ -17,7 +17,8 @@
     "strict": false,
     "min_events": null,
     "max_events": 100000,
-    "max_line_bytes": 65536
+    "max_line_bytes": 65536,
+    "max_input_bytes": 268435456
   },
   "stats": {
     "lines": 13,
@@ -482,18 +483,6 @@
           "findings": [
             0,
             1
-          ],
-          "shared_sources": [
-            "192.0.2.45"
-          ],
-          "shared_accounts": [
-            "deploy"
-          ]
-        },
-        {
-          "findings": [
-            0,
-            2
           ],
           "shared_sources": [
             "192.0.2.45"

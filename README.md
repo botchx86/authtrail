@@ -67,3 +67,9 @@ Tests cover core rules, boundaries, isolation, malformed input, compressed files
 Examples are synthetic, not sanitized production logs. `scenarios.log` covers benign retries, shared NAT, excluded backup automation, distributed attempts, subsequent success and slow attempts. Default example settings yield six findings in two investigations; a one-hour distributed window additionally detects the slow attempts. This is not a measured production false-positive rate.
 
 See `VALIDATION.md` for measured checks and remaining deployment acceptance work.
+
+## v0.4.1 hardening
+
+Inputs must be regular UTF-8 files (plain or gzip); invalid encoding fails instead of silently modifying evidence. `--max-input-bytes` limits total decompressed input to 256 MiB by default, including ignored and duplicate lines. Event and line limits still apply separately. FIFOs and other non-regular inputs are rejected.
+
+Incident grouping uses per-entity interval representatives, with only the genuine relationships needed to connect each group. This avoids constructing a quadratic graph for dense overlapping findings. Duplicate JSON configuration keys are rejected to prevent ambiguous settings. The test suite includes independent randomized reference comparisons and injected storage failures.

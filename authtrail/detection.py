@@ -119,6 +119,8 @@ def investigate_distributed(events, window=300, sources=5, failures=10):
 
 
 def distributed_success(events, window=300, sources=5, failures=10):
+    if min(window, sources, failures) < 1:
+        raise ValueError('window and thresholds must be positive')
     from .models import finding
     groups = defaultdict(list)
     for event in events:

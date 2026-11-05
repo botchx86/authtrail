@@ -13,3 +13,15 @@
 No production logs or target deployment environment were supplied. Before relying on alerts, run a representative read-only export in the intended environment, inspect parsing coverage and exclusions, confirm known benign/attack examples, measure memory and runtime, and tune thresholds. Synthetic tests cannot establish real-world false-positive/false-negative rates.
 
 The supported release scope is bounded offline Linux/OpenSSH analysis. This does not certify streaming operation, adversarial shared-directory safety, Windows/macOS operation or an unlimited log size. Review GitHub Actions for remote CI results on the exact deployed commit.
+
+## Iterative hardening — v0.4.1
+
+- Independent list-based references checked both success rules over 100 deterministic randomized workloads (10,000 events per rule).
+- Independent all-pairs graph checked incident grouping across 100 randomized workloads in each of three grouping modes.
+- 5,000 random malformed strings exercised the parser.
+- Failure injection covers disk full, permission failure and interrupted fsync; existing reports survived and temporary files were removed.
+- Dense grouping measurements: 1,000 / 10,000 / 50,000 overlapping findings completed in 0.006 / 0.051 / 0.316 seconds. The interval index stores a spanning forest of genuine finding relationships rather than every redundant edge.
+- Added invalid UTF-8, duplicate configuration keys, FIFO rejection and decompressed input budget regressions.
+- CI actions updated to verified v6 commit hashes and the runner pinned to Ubuntu 24.04.
+
+These checks improve engineering confidence, but do not substitute for environment-specific detection validation. Randomized seeds are fixed so failures are reproducible.
