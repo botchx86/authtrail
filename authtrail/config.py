@@ -1,6 +1,7 @@
 """Strict JSON configuration; command-line values override saved settings."""
 import ipaddress
 import json
+from copy import deepcopy
 
 DEFAULTS = dict(window=300, failures=5, users=5, distributed_sources=5,
                 distributed_failures=10, distributed_window=300, incident_gap=300,
@@ -9,7 +10,7 @@ DEFAULTS = dict(window=300, failures=5, users=5, distributed_sources=5,
 
 def load_config(path):
     if path is None:
-        return dict(DEFAULTS)
+        return deepcopy(DEFAULTS)
     with open(path, encoding='utf-8') as stream:
         data = json.load(stream)
     if not isinstance(data, dict):
@@ -17,7 +18,7 @@ def load_config(path):
     unknown = set(data) - DEFAULTS.keys()
     if unknown:
         raise ValueError(f'unknown configuration keys: {", ".join(sorted(unknown))}')
-    settings = dict(DEFAULTS, **data)
+    settings = dict(deepcopy(DEFAULTS), **data)
     for key, value in settings.items():
         if key.startswith('exclude_'):
             if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):

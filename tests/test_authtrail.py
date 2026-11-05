@@ -34,7 +34,7 @@ class ExpandedTests(unittest.TestCase):
         self.assertEqual(len(findings), 1)
         self.assertEqual(findings[0]['event_count'], 12)
         self.assertEqual(findings[0]['triggered_at'], event(4).timestamp.isoformat())
-        self.assertEqual(findings[0]['end'], event(11).timestamp.isoformat())
+        self.assertEqual(findings[0]['end'], event(11).timestamp.isoformat(timespec='microseconds'))
 
     def test_rearms_after_gap(self):
         events = [event(i) for i in range(5)] + [event(i) for i in range(30,35)]

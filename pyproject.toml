@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "authtrail"
-version = "0.3.0"
+version = "0.4.0"
 description = "Explainable, offline SSH authentication log investigations"
 requires-python = ">=3.10"
 license = {text = "MIT"}

@@ -3,7 +3,7 @@ from collections import Counter, defaultdict, deque
 
 
 def investigate(events, window=300, failures=5, users=5):
-    from .cli import finding
+    from .models import finding
     if min(window, failures, users) < 1:
         raise ValueError('window and thresholds must be positive')
     groups = defaultdict(list)
@@ -28,7 +28,7 @@ def investigate(events, window=300, failures=5, users=5):
             else:
                 active[key]['events'].append(event)
 
-        for event in sorted(records, key=lambda item: item.timestamp):
+        for event in sorted(records, key=lambda item: (item.timestamp, item.outcome != "accepted", item.file, item.line)):
             while recent and (event.timestamp - recent[0].timestamp).total_seconds() > window:
                 old = recent.popleft()
                 # Successful logins may have cleared this account since insertion.
@@ -75,7 +75,7 @@ def investigate(events, window=300, failures=5, users=5):
 
 def investigate_distributed(events, window=300, sources=5, failures=10):
     """Find concurrent failures across sources per host and per host/account."""
-    from .cli import finding
+    from .models import finding
     if min(window, sources, failures) < 1:
         raise ValueError('distributed window and thresholds must be positive')
     groups = defaultdict(list)
@@ -116,3 +116,30 @@ def investigate_distributed(events, window=300, sources=5, failures=10):
         if burst is not None:
             emit()
     return sorted(results, key=lambda f: (f['end'], f['host'], f['rule'], f['accounts']))
+
+
+def distributed_success(events, window=300, sources=5, failures=10):
+    from .models import finding
+    groups = defaultdict(list)
+    for event in events:
+        groups[event.host, event.user].append(event)
+    results = []
+    for (host, user), records in groups.items():
+        recent = deque()
+        counts = Counter()
+        for event in sorted(records, key=lambda e: (e.timestamp, e.outcome != 'accepted', e.file, e.line)):
+            while recent and (event.timestamp-recent[0].timestamp).total_seconds() > window:
+                old = recent.popleft()
+                counts[old.source_ip] -= 1
+                if not counts[old.source_ip]: del counts[old.source_ip]
+            if event.outcome == 'failed':
+                recent.append(event)
+                counts[event.source_ip] += 1
+            elif len(recent) >= failures and len(counts) >= sources:
+                item = finding('distributed_success', 'high', host, None, list(recent)+[event],
+                               'Successful login after distributed failures against this account; verify legitimacy.')
+                item['source_ips'] = sorted({e.source_ip for e in recent} | {event.source_ip})
+                results.append(item)
+                recent.clear()
+                counts.clear()
+    return results

@@ -1,0 +1,24 @@
+name: Tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python }}'
+      - run: python -m unittest discover -s tests -v
+      - run: python -m pip wheel . --no-deps -w dist
+      - run: |
+          python -m venv /tmp/authtrail-test
+          /tmp/authtrail-test/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/authtrail-test/bin/authtrail --help
+          /tmp/authtrail-test/bin/authtrail "$GITHUB_WORKSPACE/examples/scenarios.log" --year 2026 --strict --compact-json --json /tmp/smoke.json

@@ -1,127 +1,69 @@
 # AuthTrail
 
-An offline Python CLI that turns exported OpenSSH authentication logs into explainable investigation leads. Python 3.10+; no runtime dependencies. Version 0.3.0.
+Offline OpenSSH authentication investigation CLI. Python 3.10–3.14, Linux; no runtime dependencies. AuthTrail produces explainable findings and grouped timelines from exported logs. Findings are investigation leads, not proof of compromise.
 
-## Try it
-
-From this directory:
-
-```sh
-python -m authtrail examples/auth.log --year 2026 --json report.json --html report.html
-```
-
-The synthetic example produces three findings, including a successful login after failures. Alice's single failed attempt followed by success does not meet the default account threshold.
-
-Optional installation in a virtual environment:
+## Install and run
 
 ```sh
 python -m venv .venv
 . .venv/bin/activate
 pip install .
-authtrail --help
+authtrail examples/scenarios.log --year 2026 --config examples/config.json \
+  --strict --compact-json --json report.json --html report.html
 ```
 
-## Analyze your logs
+From a source checkout, `python -m authtrail` also works. `authtrail --help` lists options.
+
+## Detection
+
+- Repeated failures against one account from one source on one host.
+- One source attempting many accounts on one host.
+- Success after repeated failures from that source.
+- Distributed failures against one account or across accounts on one host.
+- Success following distributed failures against the same host/account.
+
+Defaults: five per-account failures or five distinct accounts in 300 seconds. Distributed rules require ten failures and five sources in 300 seconds. Windows are inclusive. Bursts retain subsequent evidence until their rolling counts drop below thresholds. Equal-time successes are processed before failures, and ambiguity is reported; their actual sequence is unknown.
+
+Grouping defaults to shared sources and a 300-second gap, with explicit pairwise relationships. `--group-by account` or `either` broadens grouping. Common accounts or shared infrastructure can join unrelated activity.
+
+## Configuration
+
+JSON keys: `window`, `failures`, `users`, `distributed_sources`, `distributed_failures`, `distributed_window`, `incident_gap`, `exclude_source`, `exclude_user`. Numeric values must be positive integers. Exclusion values are lists of IP/CIDR strings or exact case-sensitive account names. Unknown keys are rejected. CLI flags override individual saved settings; exclusion flags replace the corresponding saved list.
 
 ```sh
-python -m authtrail /var/log/auth.log.1.gz /var/log/auth.log --year 2026 \
-  --timezone=+00:00 --window 300 --failures 5 --users 5 \
-  --exclude-source 192.0.2.0/24 --json findings.json --html findings.html
+authtrail examples/scenarios.log --year 2026 --config examples/config.json \
+  --distributed-window 3600 --group-by source --strict --min-events 10
 ```
 
-Supply explicit paths; shells can expand globs. Reports include original log text, filenames and line numbers. Keep reports protected like the source logs. No network connections are made. Excluded sources are omitted from analysis; the report records the exclusions and counts.
+`--strict` rejects malformed authentication records and zero usable events. `--min-events N` sets a minimum usable count. Unsupported prefixes are counted as ignored, so review per-file counts even when strict mode passes. Exit 0 means completed, including findings; exit 2 means argument, input, quality, limit or output failure.
 
-## Detection rules
+## Input and evidence
 
-- **Repeated failures:** five failures against one account from one source on one host within five minutes.
-- **Many accounts:** one source attempts five distinct accounts on one host within five minutes. This is a possible enumeration or spraying pattern; SSH logs do not reveal whether the same password was tried.
-- **Success after failures:** an accepted login follows five failures for the same account, source, and host within five minutes. Any accepted authentication method qualifies, including a public key.
+Supports traditional syslog and ISO 8601 timestamps, `sshd` and `sshd-session`, IPv4/IPv6, plain text and gzip. Recognizes Failed/Accepted authentication messages. It does not support Windows events, journal JSON or arbitrary PAM-only formats.
 
-Thresholds and window are configurable. Events are sorted by UTC timestamp. Evidence windows include events exactly on the boundary. Repeated-failure and many-account findings emit on threshold crossing and rearm when counts drop below the threshold. Successful authentication clears that account's recent failures. Separate rules may share evidence. Findings include the initial threshold window and subsequent failures while the rule remains above its threshold. A burst closes when the rolling count falls below the threshold; an account success also closes its repeated-failure burst. Each finding records `triggered_at`, start/end, event count, failure count, and full evidence. Success-after-failure evidence remains bounded to the correlation window. Many-account evidence contains failures only; successes clear an account’s pending failures but do not appear in that rule’s evidence.
+Traditional syslog omits year and offset: supply `--year` and `--timezone=+00:00` (UTC default). Split traditional logs across New Year or daylight-saving changes. ISO timestamps retain their offsets. Hostnames are not canonicalized across aliases.
 
-## Supported input and limits
+Repeated records in one file are preserved. Overlapping records across files use maximum occurrence count: five copies plus three copies count as five. Independent identical records across files remain ambiguous. Reports retain file and line provenance. Exclusions remove events before all rules.
 
-Supports traditional `Nov  1 12:00:00 host sshd[123]: ...` syslog and ISO 8601 timestamp prefixes, with `sshd` or `sshd-session`, with or without a PID. Recognizes OpenSSH `Failed METHOD for [invalid user] USER from IP port ...` and `Accepted METHOD ...` lines, IPv4 and IPv6, plain text and gzip rotations.
+JSON schema 3 embeds evidence. `--compact-json` selects schema 4 with one event table and ID references. IDs depend on input path, line and raw content and are not stable across relocated exports. HTML is standalone and escapes log text. Reports include effective settings, tool version, quality statistics and diagnostics.
 
-Traditional syslog has no year or timezone: `--year` is required, and `--timezone` supplies a fixed offset (UTC by default). Split traditional logs spanning New Year or daylight-saving offset changes into separate runs. ISO timestamps with offsets retain their explicit timezone. Equal timestamps retain input order; coarse timestamps may leave actual event order uncertain.
+Report aliases to inputs or configuration, including hard links, are rejected. Each report is written to a restricted temporary file and atomically replaced. Two output files are separate transactions; a failed second write can leave a completed first report. Run in directories controlled by the analyst; filesystem checks are not protection against hostile concurrent directory changes.
 
-Unrecognized lines are counted as ignored; recognized SSH Accepted/Failed messages with unsupported structure, invalid timestamps or invalid IPs are counted as malformed. Reports include per-file counts and up to 20 diagnostic locations with reasons. Diagnostic entries omit raw log text. The terminal warns when no usable events remain. Completely unrecognized prefixes are still ignored, so review input quality before relying on a clean report. This version does not ingest journal JSON, Windows events, PAM-only failures, or arbitrary vendor formats. A zero-finding report does not establish that activity is safe or telemetry complete.
+## Operational limits
 
-Identical timestamp/host/raw-line records are counted once across overlapping inputs. Truly identical records within a file are also collapsed. All parsed events and report evidence are held in memory, so start with bounded exports. This is a triage tool, not a SIEM or proof of compromise. Baseline automation and shared NAT sources before interpreting findings.
+This is a bounded offline analyzer, not a streaming service. Default limits are 100,000 retained events and 65,536 encoded bytes per line. Exceeding them aborts without writing reports. Override with `--max-events` and `--max-line-bytes` only after sizing memory. Input, evidence and generated reports remain in memory; compact JSON reduces output duplication, not the full analysis memory footprint. Dense overlapping findings can make incident grouping expensive.
 
-Exit codes: `0` completed (with or without findings); `2` input, argument, or output error. Existing report files are overwritten. Input paths cannot be used as report paths.
+Use read-only exports, an unprivileged account and protected report storage. Start with a small representative export, inspect ignored/malformed counts and exclusions, and compare known cases against findings. No network requests or automatic response actions occur.
 
-## Tests
+## Validation
 
 ```sh
 python -m unittest discover -s tests -v
+python scripts/benchmark.py --events 100000
 ```
 
-Tests cover correlations, complete burst evidence, rearming after gaps and successes, window boundaries, ordering, host/account isolation, IPv6, timestamp/process variants, malformed records, gzip overlap, exclusions, per-file statistics and HTML escaping.
+Tests cover core rules, boundaries, isolation, malformed input, compressed files, overlapping exports, same-time ordering, hard links, atomic write failure, quality gates and resource limits. CI tests Python 3.10–3.14 and installs a wheel outside the source directory.
 
-## v0.2 changes
+Examples are synthetic, not sanitized production logs. `scenarios.log` covers benign retries, shared NAT, excluded backup automation, distributed attempts, subsequent success and slow attempts. Default example settings yield six findings in two investigations; a one-hour distributed window additionally detects the slow attempts. This is not a measured production false-positive rate.
 
-- Incremental account counts and queues replace repeated scans of the entire active window on each event. Sorting still costs O(n log n); events and full evidence remain in memory.
-- Complete failure-burst evidence with separate trigger and end timestamps.
-- JSON schema version 2 added finding summaries, per-file statistics and bounded parsing diagnostics.
-- Broader OpenSSH prefix support and expanded regression/integration tests.
-
-Windows logs and persistent history remain future work.
-
-## v0.3: distributed rules, configuration and investigations
-
-Run the mixed synthetic scenario:
-
-```sh
-python -m authtrail examples/scenarios.log --year 2026 --config examples/config.json \
-  --json examples/scenarios-report.json --html examples/scenarios-report.html
-```
-
-Two new rules require **both** 10 failed attempts and five distinct source IPs inside five minutes by default:
-
-- `distributed_account`: sources target the same account on the same host.
-- `distributed_host`: sources target the same host, across any accounts.
-
-Both retain complete failure bursts and rearm when either rolling threshold drops below its limit. They operate on failures independently of subsequent successes; a successful login does not erase evidence of a distributed campaign. Threshold counts are indicators, not proof of coordination. Shared proxies, NAT gateways and automation require local tuning. Host and account rules can overlap.
-
-JSON configuration uses these optional keys (unknown keys or invalid types are rejected):
-
-| Key | Default | Meaning |
-| --- | --- | --- |
-| `window` | 300 | Existing per-source rule window, seconds |
-| `failures` | 5 | Per-account failure threshold |
-| `users` | 5 | Distinct accounts per source |
-| `distributed_sources` | 5 | Distinct IPs for distributed rules |
-| `distributed_failures` | 10 | Failure count for distributed rules |
-| `distributed_window` | 300 | Distributed rule window, seconds |
-| `incident_gap` | 300 | Maximum gap when grouping related finding intervals |
-| `exclude_source` | [] | IP addresses or CIDRs excluded before detection |
-| `exclude_user` | [] | Exact, case-sensitive usernames excluded before detection |
-
-Each key has a corresponding CLI flag with hyphens, e.g. `--distributed-window 3600` or `--exclude-user backup`. Explicit CLI flags override the corresponding saved key; repeated exclusion flags replace that saved list rather than appending to it. Existing CLI commands remain valid. JSON keeps the tool dependency-free on Python 3.10. Configuration currently controls fixed rule thresholds and exclusions, not arbitrary rule expressions or per-rule enable/disable settings.
-
-Example for slower activity:
-
-```sh
-python -m authtrail examples/scenarios.log --year 2026 --config examples/config.json \
-  --distributed-window 3600 --json slow-report.json
-```
-
-Schema version 3 adds `incidents`, with deterministic IDs, finding indexes, severity, sources, accounts, and a timestamp-sorted timeline. Findings on the same host group when their intervals overlap or fall within `incident_gap`, and share a source IP or account. Relationships are transitive. Timelines deduplicate evidence shared by multiple rules. Only detected evidence appears in these timelines; they do not include every benign event on the host. Findings retain their individual evidence and trigger times. Distributed findings use `source_ip: null` and a `source_ips` list.
-
-HTML reports show grouped investigations followed by individual findings, with expandable evidence. Reports use no scripts or external resources.
-
-### Validation scenarios
-
-`examples/scenarios.log` is **synthetic**, with documentation IP ranges and no production data. It includes:
-
-- A legitimate password mistake and successful retry.
-- Three users behind shared NAT, each with a mistake followed by success.
-- A noisy backup account excluded by the example configuration.
-- Multiple sources targeting `deploy`, followed by repeated failures and a successful login.
-- Multiple sources trying distinct accounts on another host.
-- Slow attempts spread across 27 minutes, detected only with a longer window.
-
-The default example configuration produces findings on `target` and `edge`, grouped into two investigations; `office` and `slow` produce none. Increasing the distributed window to one hour also detects `slow`. This checks known scenario expectations, not a measured production false-positive rate. Sanitized real-world log validation is still needed before claiming operational accuracy.
-
-The suite now has 23 tests, covering distinct-source thresholds, host/account isolation, slow activity, inclusive boundaries, rearming, complete evidence, configuration validation and overrides, grouped timeline deduplication, and benign fixture expectations alongside the earlier tests. Processing still holds input and evidence in memory; grouping many findings may be quadratic in the number of findings.
+See `VALIDATION.md` for measured checks and remaining deployment acceptance work.

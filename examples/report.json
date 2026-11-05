@@ -1,4 +1,5 @@
 {
+  "tool_version": "0.4.0",
   "schema_version": 3,
   "configuration": {
     "year": 2026,
@@ -11,7 +12,12 @@
     "distributed_sources": 5,
     "distributed_failures": 10,
     "distributed_window": 300,
-    "incident_gap": 300
+    "incident_gap": 300,
+    "group_by": "source",
+    "strict": false,
+    "min_events": null,
+    "max_events": 100000,
+    "max_line_bytes": 65536
   },
   "stats": {
     "lines": 13,
@@ -45,12 +51,12 @@
       "accounts": [
         "deploy"
       ],
-      "start": "2026-11-01T12:00:00+00:00",
-      "end": "2026-11-01T12:00:04+00:00",
+      "start": "2026-11-01T12:00:00.000000+00:00",
+      "end": "2026-11-01T12:00:04.000000+00:00",
       "explanation": "Repeated failures against one account.",
       "evidence": [
         {
-          "timestamp": "2026-11-01T12:00:00+00:00",
+          "timestamp": "2026-11-01T12:00:00.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -58,10 +64,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 1,
-          "raw": "2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "bbf9ff75b337e5e7e7ca6d8c"
         },
         {
-          "timestamp": "2026-11-01T12:00:01+00:00",
+          "timestamp": "2026-11-01T12:00:01.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -69,10 +76,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 2,
-          "raw": "2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "cdb814b62b800967a75fa21d"
         },
         {
-          "timestamp": "2026-11-01T12:00:02+00:00",
+          "timestamp": "2026-11-01T12:00:02.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -80,10 +88,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 3,
-          "raw": "2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "716e145c49f1292361a22250"
         },
         {
-          "timestamp": "2026-11-01T12:00:03+00:00",
+          "timestamp": "2026-11-01T12:00:03.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -91,10 +100,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 4,
-          "raw": "2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "a255eb82a6fa34b346b08435"
         },
         {
-          "timestamp": "2026-11-01T12:00:04+00:00",
+          "timestamp": "2026-11-01T12:00:04.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -102,7 +112,8 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 5,
-          "raw": "2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "b6ab5bca6ef128fcba6fa5ba"
         }
       ]
     },
@@ -111,18 +122,18 @@
       "severity": "high",
       "host": "web01",
       "source_ip": "192.0.2.45",
-      "triggered_at": "2026-11-01T12:00:05+00:00",
+      "triggered_at": "2026-11-01T12:00:05.000000+00:00",
       "event_count": 6,
       "failure_count": 5,
       "accounts": [
         "deploy"
       ],
-      "start": "2026-11-01T12:00:00+00:00",
-      "end": "2026-11-01T12:00:05+00:00",
+      "start": "2026-11-01T12:00:00.000000+00:00",
+      "end": "2026-11-01T12:00:05.000000+00:00",
       "explanation": "Successful login after repeated failures; verify whether expected.",
       "evidence": [
         {
-          "timestamp": "2026-11-01T12:00:00+00:00",
+          "timestamp": "2026-11-01T12:00:00.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -130,10 +141,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 1,
-          "raw": "2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "bbf9ff75b337e5e7e7ca6d8c"
         },
         {
-          "timestamp": "2026-11-01T12:00:01+00:00",
+          "timestamp": "2026-11-01T12:00:01.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -141,10 +153,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 2,
-          "raw": "2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "cdb814b62b800967a75fa21d"
         },
         {
-          "timestamp": "2026-11-01T12:00:02+00:00",
+          "timestamp": "2026-11-01T12:00:02.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -152,10 +165,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 3,
-          "raw": "2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "716e145c49f1292361a22250"
         },
         {
-          "timestamp": "2026-11-01T12:00:03+00:00",
+          "timestamp": "2026-11-01T12:00:03.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -163,10 +177,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 4,
-          "raw": "2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "a255eb82a6fa34b346b08435"
         },
         {
-          "timestamp": "2026-11-01T12:00:04+00:00",
+          "timestamp": "2026-11-01T12:00:04.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -174,10 +189,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 5,
-          "raw": "2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "b6ab5bca6ef128fcba6fa5ba"
         },
         {
-          "timestamp": "2026-11-01T12:00:05+00:00",
+          "timestamp": "2026-11-01T12:00:05.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -185,7 +201,8 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 6,
-          "raw": "2026-11-01T12:00:05Z web01 sshd[42]: Accepted password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:05Z web01 sshd[42]: Accepted password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "8b45496915568db4052f91a8"
         }
       ]
     },
@@ -205,12 +222,12 @@
         "user3",
         "user4"
       ],
-      "start": "2026-11-01T12:00:10+00:00",
-      "end": "2026-11-01T12:00:30+00:00",
+      "start": "2026-11-01T12:00:10.000000+00:00",
+      "end": "2026-11-01T12:00:30.000000+00:00",
       "explanation": "One source attempted multiple accounts; possible account enumeration or password spraying.",
       "evidence": [
         {
-          "timestamp": "2026-11-01T12:00:10+00:00",
+          "timestamp": "2026-11-01T12:00:10.000000+00:00",
           "host": "web01",
           "user": "user0",
           "source_ip": "192.0.2.45",
@@ -218,10 +235,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 7,
-          "raw": "2026-11-01T12:00:10Z web01 sshd[42]: Failed password for user0 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:10Z web01 sshd[42]: Failed password for user0 from 192.0.2.45 port 22 ssh2",
+          "id": "12f89f022208a02a7fb5bfe5"
         },
         {
-          "timestamp": "2026-11-01T12:00:11+00:00",
+          "timestamp": "2026-11-01T12:00:11.000000+00:00",
           "host": "web01",
           "user": "user1",
           "source_ip": "192.0.2.45",
@@ -229,10 +247,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 8,
-          "raw": "2026-11-01T12:00:11Z web01 sshd[42]: Failed password for user1 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:11Z web01 sshd[42]: Failed password for user1 from 192.0.2.45 port 22 ssh2",
+          "id": "3e4f6b2cab75753babb17e4e"
         },
         {
-          "timestamp": "2026-11-01T12:00:12+00:00",
+          "timestamp": "2026-11-01T12:00:12.000000+00:00",
           "host": "web01",
           "user": "user2",
           "source_ip": "192.0.2.45",
@@ -240,10 +259,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 9,
-          "raw": "2026-11-01T12:00:12Z web01 sshd[42]: Failed password for user2 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:12Z web01 sshd[42]: Failed password for user2 from 192.0.2.45 port 22 ssh2",
+          "id": "7fcc11bd3fce01593ad27561"
         },
         {
-          "timestamp": "2026-11-01T12:00:13+00:00",
+          "timestamp": "2026-11-01T12:00:13.000000+00:00",
           "host": "web01",
           "user": "user3",
           "source_ip": "192.0.2.45",
@@ -251,10 +271,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 10,
-          "raw": "2026-11-01T12:00:13Z web01 sshd[42]: Failed password for user3 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:13Z web01 sshd[42]: Failed password for user3 from 192.0.2.45 port 22 ssh2",
+          "id": "a546b574fb2894ace3feec7a"
         },
         {
-          "timestamp": "2026-11-01T12:00:14+00:00",
+          "timestamp": "2026-11-01T12:00:14.000000+00:00",
           "host": "web01",
           "user": "user4",
           "source_ip": "192.0.2.45",
@@ -262,10 +283,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 11,
-          "raw": "2026-11-01T12:00:14Z web01 sshd[42]: Failed password for user4 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:14Z web01 sshd[42]: Failed password for user4 from 192.0.2.45 port 22 ssh2",
+          "id": "9227e7dccf8d92e4f0216918"
         },
         {
-          "timestamp": "2026-11-01T12:00:30+00:00",
+          "timestamp": "2026-11-01T12:00:30.000000+00:00",
           "host": "web01",
           "user": "alice",
           "source_ip": "192.0.2.45",
@@ -273,7 +295,8 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 12,
-          "raw": "2026-11-01T12:00:30Z web01 sshd[42]: Failed password for alice from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:30Z web01 sshd[42]: Failed password for alice from 192.0.2.45 port 22 ssh2",
+          "id": "54910e9b9c45d7335d093923"
         }
       ]
     }
@@ -282,8 +305,8 @@
     {
       "id": "AT-0001",
       "host": "web01",
-      "start": "2026-11-01T12:00:00+00:00",
-      "end": "2026-11-01T12:00:30+00:00",
+      "start": "2026-11-01T12:00:00.000000+00:00",
+      "end": "2026-11-01T12:00:30.000000+00:00",
       "severity": "high",
       "source_ips": [
         "192.0.2.45"
@@ -310,7 +333,7 @@
       "event_count": 12,
       "timeline": [
         {
-          "timestamp": "2026-11-01T12:00:00+00:00",
+          "timestamp": "2026-11-01T12:00:00.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -318,10 +341,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 1,
-          "raw": "2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "bbf9ff75b337e5e7e7ca6d8c"
         },
         {
-          "timestamp": "2026-11-01T12:00:01+00:00",
+          "timestamp": "2026-11-01T12:00:01.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -329,10 +353,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 2,
-          "raw": "2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "cdb814b62b800967a75fa21d"
         },
         {
-          "timestamp": "2026-11-01T12:00:02+00:00",
+          "timestamp": "2026-11-01T12:00:02.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -340,10 +365,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 3,
-          "raw": "2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "716e145c49f1292361a22250"
         },
         {
-          "timestamp": "2026-11-01T12:00:03+00:00",
+          "timestamp": "2026-11-01T12:00:03.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -351,10 +377,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 4,
-          "raw": "2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "a255eb82a6fa34b346b08435"
         },
         {
-          "timestamp": "2026-11-01T12:00:04+00:00",
+          "timestamp": "2026-11-01T12:00:04.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -362,10 +389,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 5,
-          "raw": "2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "b6ab5bca6ef128fcba6fa5ba"
         },
         {
-          "timestamp": "2026-11-01T12:00:05+00:00",
+          "timestamp": "2026-11-01T12:00:05.000000+00:00",
           "host": "web01",
           "user": "deploy",
           "source_ip": "192.0.2.45",
@@ -373,10 +401,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 6,
-          "raw": "2026-11-01T12:00:05Z web01 sshd[42]: Accepted password for deploy from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:05Z web01 sshd[42]: Accepted password for deploy from 192.0.2.45 port 22 ssh2",
+          "id": "8b45496915568db4052f91a8"
         },
         {
-          "timestamp": "2026-11-01T12:00:10+00:00",
+          "timestamp": "2026-11-01T12:00:10.000000+00:00",
           "host": "web01",
           "user": "user0",
           "source_ip": "192.0.2.45",
@@ -384,10 +413,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 7,
-          "raw": "2026-11-01T12:00:10Z web01 sshd[42]: Failed password for user0 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:10Z web01 sshd[42]: Failed password for user0 from 192.0.2.45 port 22 ssh2",
+          "id": "12f89f022208a02a7fb5bfe5"
         },
         {
-          "timestamp": "2026-11-01T12:00:11+00:00",
+          "timestamp": "2026-11-01T12:00:11.000000+00:00",
           "host": "web01",
           "user": "user1",
           "source_ip": "192.0.2.45",
@@ -395,10 +425,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 8,
-          "raw": "2026-11-01T12:00:11Z web01 sshd[42]: Failed password for user1 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:11Z web01 sshd[42]: Failed password for user1 from 192.0.2.45 port 22 ssh2",
+          "id": "3e4f6b2cab75753babb17e4e"
         },
         {
-          "timestamp": "2026-11-01T12:00:12+00:00",
+          "timestamp": "2026-11-01T12:00:12.000000+00:00",
           "host": "web01",
           "user": "user2",
           "source_ip": "192.0.2.45",
@@ -406,10 +437,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 9,
-          "raw": "2026-11-01T12:00:12Z web01 sshd[42]: Failed password for user2 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:12Z web01 sshd[42]: Failed password for user2 from 192.0.2.45 port 22 ssh2",
+          "id": "7fcc11bd3fce01593ad27561"
         },
         {
-          "timestamp": "2026-11-01T12:00:13+00:00",
+          "timestamp": "2026-11-01T12:00:13.000000+00:00",
           "host": "web01",
           "user": "user3",
           "source_ip": "192.0.2.45",
@@ -417,10 +449,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 10,
-          "raw": "2026-11-01T12:00:13Z web01 sshd[42]: Failed password for user3 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:13Z web01 sshd[42]: Failed password for user3 from 192.0.2.45 port 22 ssh2",
+          "id": "a546b574fb2894ace3feec7a"
         },
         {
-          "timestamp": "2026-11-01T12:00:14+00:00",
+          "timestamp": "2026-11-01T12:00:14.000000+00:00",
           "host": "web01",
           "user": "user4",
           "source_ip": "192.0.2.45",
@@ -428,10 +461,11 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 11,
-          "raw": "2026-11-01T12:00:14Z web01 sshd[42]: Failed password for user4 from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:14Z web01 sshd[42]: Failed password for user4 from 192.0.2.45 port 22 ssh2",
+          "id": "9227e7dccf8d92e4f0216918"
         },
         {
-          "timestamp": "2026-11-01T12:00:30+00:00",
+          "timestamp": "2026-11-01T12:00:30.000000+00:00",
           "host": "web01",
           "user": "alice",
           "source_ip": "192.0.2.45",
@@ -439,7 +473,42 @@
           "method": "password",
           "file": "examples/auth.log",
           "line": 12,
-          "raw": "2026-11-01T12:00:30Z web01 sshd[42]: Failed password for alice from 192.0.2.45 port 22 ssh2"
+          "raw": "2026-11-01T12:00:30Z web01 sshd[42]: Failed password for alice from 192.0.2.45 port 22 ssh2",
+          "id": "54910e9b9c45d7335d093923"
+        }
+      ],
+      "relationships": [
+        {
+          "findings": [
+            0,
+            1
+          ],
+          "shared_sources": [
+            "192.0.2.45"
+          ],
+          "shared_accounts": [
+            "deploy"
+          ]
+        },
+        {
+          "findings": [
+            0,
+            2
+          ],
+          "shared_sources": [
+            "192.0.2.45"
+          ],
+          "shared_accounts": []
+        },
+        {
+          "findings": [
+            1,
+            2
+          ],
+          "shared_sources": [
+            "192.0.2.45"
+          ],
+          "shared_accounts": []
         }
       ]
     }
