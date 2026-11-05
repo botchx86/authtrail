@@ -1,14 +1,20 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "authtrail"
-version = "0.4.1"
+version = "0.4.2"
 readme = "README.md"
 description = "Explainable, offline SSH authentication log investigations"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://github.com/botchx86/authtrail"
+Repository = "https://github.com/botchx86/authtrail"
+Issues = "https://github.com/botchx86/authtrail/issues"
 
 [project.scripts]
 authtrail = "authtrail.cli:main"

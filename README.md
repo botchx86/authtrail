@@ -2,17 +2,65 @@
 
 Offline OpenSSH authentication investigation CLI. Python 3.10–3.14, Linux; no runtime dependencies. AuthTrail produces explainable findings and grouped timelines from exported logs. Findings are investigation leads, not proof of compromise.
 
-## Install and run
+## Install from the command line
+
+Requires Linux and Python 3.10–3.14. Install the versioned release in an isolated tool environment with [pipx](https://pipx.pypa.io/):
 
 ```sh
-python -m venv .venv
+pipx install https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+authtrail --version
+authtrail --help
+```
+
+If `authtrail` is not on your PATH, run `pipx ensurepath` and reopen your terminal.
+
+With [uv](https://docs.astral.sh/uv/), use:
+
+```sh
+uv tool install https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+```
+
+Or use Python's built-in virtual environment support:
+
+```sh
+python3 -m venv ~/.venvs/authtrail
+~/.venvs/authtrail/bin/python -m pip install https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+~/.venvs/authtrail/bin/authtrail --help
+```
+
+Analyze your exported logs (use the year the events occurred):
+
+```sh
+authtrail /path/to/auth.log --year 2026 --strict --compact-json --json report.json --html report.html
+```
+
+No root privileges or API keys are needed when you have read access to the exported files. This project is distributed through GitHub Releases; `pip install authtrail` from PyPI is not the documented installation method.
+
+### Download and verify a release
+
+```sh
+curl -fLO https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+curl -fLO https://github.com/botchx86/authtrail/releases/download/v0.4.2/SHA256SUMS
+sha256sum --ignore-missing --check SHA256SUMS
+pipx install ./authtrail-0.4.2-py3-none-any.whl
+```
+
+Checksums detect corrupted downloads; they are not independently signed provenance. The release also includes a source distribution.
+
+### Try the included examples or contribute
+
+```sh
+git clone https://github.com/botchx86/authtrail.git
+cd authtrail
+git checkout v0.4.2
+python3 -m venv .venv
 . .venv/bin/activate
-pip install .
+python -m pip install .
 authtrail examples/scenarios.log --year 2026 --config examples/config.json \
   --strict --compact-json --json report.json --html report.html
 ```
 
-From a source checkout, `python -m authtrail` also works. `authtrail --help` lists options.
+For future releases, install the new versioned wheel with `pipx install --force URL` (or `uv tool install --force URL`). Remove with `pipx uninstall authtrail` or `uv tool uninstall authtrail`, matching your installation method.
 
 ## Detection
 
