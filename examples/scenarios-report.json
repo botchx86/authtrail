@@ -1,0 +1,1117 @@
+{
+  "schema_version": 3,
+  "configuration": {
+    "year": 2026,
+    "timezone": "UTC",
+    "window_seconds": 300,
+    "failure_threshold": 5,
+    "account_threshold": 5,
+    "excluded_sources": [
+      "203.0.113.0/28"
+    ],
+    "excluded_users": [
+      "backup"
+    ],
+    "distributed_sources": 5,
+    "distributed_failures": 10,
+    "distributed_window": 300,
+    "incident_gap": 300
+  },
+  "stats": {
+    "lines": 52,
+    "parsed": 44,
+    "ignored": 0,
+    "malformed": 0,
+    "excluded": 8,
+    "duplicates": 0
+  },
+  "input_files": [
+    {
+      "file": "examples/scenarios.log",
+      "lines": 52,
+      "parsed": 44,
+      "ignored": 0,
+      "malformed": 0,
+      "excluded": 8,
+      "duplicates": 0
+    }
+  ],
+  "diagnostics": [],
+  "findings": [
+    {
+      "rule": "distributed_account",
+      "severity": "medium",
+      "host": "target",
+      "source_ip": null,
+      "triggered_at": "2026-11-05T12:01:45+00:00",
+      "event_count": 15,
+      "failure_count": 15,
+      "accounts": [
+        "deploy"
+      ],
+      "start": "2026-11-05T12:01:00+00:00",
+      "end": "2026-11-05T12:02:04+00:00",
+      "explanation": "Multiple sources generated authentication failures against one account. Investigate shared infrastructure and expected automation.",
+      "evidence": [
+        {
+          "timestamp": "2026-11-05T12:01:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 17,
+          "raw": "2026-11-05T12:01:00+00:00 target sshd[1016]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:05+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.2",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 18,
+          "raw": "2026-11-05T12:01:05+00:00 target sshd[1017]: Failed password for deploy from 198.51.100.2 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:10+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.3",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 19,
+          "raw": "2026-11-05T12:01:10+00:00 target sshd[1018]: Failed password for deploy from 198.51.100.3 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:15+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.4",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 20,
+          "raw": "2026-11-05T12:01:15+00:00 target sshd[1019]: Failed password for deploy from 198.51.100.4 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:20+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.5",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 21,
+          "raw": "2026-11-05T12:01:20+00:00 target sshd[1020]: Failed password for deploy from 198.51.100.5 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:25+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 22,
+          "raw": "2026-11-05T12:01:25+00:00 target sshd[1021]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:30+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.2",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 23,
+          "raw": "2026-11-05T12:01:30+00:00 target sshd[1022]: Failed password for deploy from 198.51.100.2 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:35+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.3",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 24,
+          "raw": "2026-11-05T12:01:35+00:00 target sshd[1023]: Failed password for deploy from 198.51.100.3 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:40+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.4",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 25,
+          "raw": "2026-11-05T12:01:40+00:00 target sshd[1024]: Failed password for deploy from 198.51.100.4 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:45+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.5",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 26,
+          "raw": "2026-11-05T12:01:45+00:00 target sshd[1025]: Failed password for deploy from 198.51.100.5 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 27,
+          "raw": "2026-11-05T12:02:00+00:00 target sshd[1026]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:01+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 28,
+          "raw": "2026-11-05T12:02:01+00:00 target sshd[1027]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:02+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 29,
+          "raw": "2026-11-05T12:02:02+00:00 target sshd[1028]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:03+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 30,
+          "raw": "2026-11-05T12:02:03+00:00 target sshd[1029]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:04+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 31,
+          "raw": "2026-11-05T12:02:04+00:00 target sshd[1030]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        }
+      ],
+      "source_ips": [
+        "198.51.100.1",
+        "198.51.100.2",
+        "198.51.100.3",
+        "198.51.100.4",
+        "198.51.100.5"
+      ]
+    },
+    {
+      "rule": "distributed_host",
+      "severity": "medium",
+      "host": "target",
+      "source_ip": null,
+      "triggered_at": "2026-11-05T12:01:45+00:00",
+      "event_count": 15,
+      "failure_count": 15,
+      "accounts": [
+        "deploy"
+      ],
+      "start": "2026-11-05T12:01:00+00:00",
+      "end": "2026-11-05T12:02:04+00:00",
+      "explanation": "Multiple sources generated authentication failures against one host. Investigate shared infrastructure and expected automation.",
+      "evidence": [
+        {
+          "timestamp": "2026-11-05T12:01:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 17,
+          "raw": "2026-11-05T12:01:00+00:00 target sshd[1016]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:05+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.2",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 18,
+          "raw": "2026-11-05T12:01:05+00:00 target sshd[1017]: Failed password for deploy from 198.51.100.2 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:10+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.3",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 19,
+          "raw": "2026-11-05T12:01:10+00:00 target sshd[1018]: Failed password for deploy from 198.51.100.3 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:15+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.4",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 20,
+          "raw": "2026-11-05T12:01:15+00:00 target sshd[1019]: Failed password for deploy from 198.51.100.4 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:20+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.5",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 21,
+          "raw": "2026-11-05T12:01:20+00:00 target sshd[1020]: Failed password for deploy from 198.51.100.5 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:25+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 22,
+          "raw": "2026-11-05T12:01:25+00:00 target sshd[1021]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:30+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.2",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 23,
+          "raw": "2026-11-05T12:01:30+00:00 target sshd[1022]: Failed password for deploy from 198.51.100.2 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:35+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.3",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 24,
+          "raw": "2026-11-05T12:01:35+00:00 target sshd[1023]: Failed password for deploy from 198.51.100.3 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:40+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.4",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 25,
+          "raw": "2026-11-05T12:01:40+00:00 target sshd[1024]: Failed password for deploy from 198.51.100.4 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:45+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.5",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 26,
+          "raw": "2026-11-05T12:01:45+00:00 target sshd[1025]: Failed password for deploy from 198.51.100.5 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 27,
+          "raw": "2026-11-05T12:02:00+00:00 target sshd[1026]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:01+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 28,
+          "raw": "2026-11-05T12:02:01+00:00 target sshd[1027]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:02+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 29,
+          "raw": "2026-11-05T12:02:02+00:00 target sshd[1028]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:03+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 30,
+          "raw": "2026-11-05T12:02:03+00:00 target sshd[1029]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:04+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 31,
+          "raw": "2026-11-05T12:02:04+00:00 target sshd[1030]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        }
+      ],
+      "source_ips": [
+        "198.51.100.1",
+        "198.51.100.2",
+        "198.51.100.3",
+        "198.51.100.4",
+        "198.51.100.5"
+      ]
+    },
+    {
+      "rule": "repeated_failures",
+      "severity": "medium",
+      "host": "target",
+      "source_ip": "198.51.100.1",
+      "triggered_at": "2026-11-05T12:02:02+00:00",
+      "event_count": 7,
+      "failure_count": 7,
+      "accounts": [
+        "deploy"
+      ],
+      "start": "2026-11-05T12:01:00+00:00",
+      "end": "2026-11-05T12:02:04+00:00",
+      "explanation": "Repeated failures against one account.",
+      "evidence": [
+        {
+          "timestamp": "2026-11-05T12:01:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 17,
+          "raw": "2026-11-05T12:01:00+00:00 target sshd[1016]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:25+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 22,
+          "raw": "2026-11-05T12:01:25+00:00 target sshd[1021]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 27,
+          "raw": "2026-11-05T12:02:00+00:00 target sshd[1026]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:01+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 28,
+          "raw": "2026-11-05T12:02:01+00:00 target sshd[1027]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:02+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 29,
+          "raw": "2026-11-05T12:02:02+00:00 target sshd[1028]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:03+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 30,
+          "raw": "2026-11-05T12:02:03+00:00 target sshd[1029]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:04+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 31,
+          "raw": "2026-11-05T12:02:04+00:00 target sshd[1030]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        }
+      ]
+    },
+    {
+      "rule": "success_after_failures",
+      "severity": "high",
+      "host": "target",
+      "source_ip": "198.51.100.1",
+      "triggered_at": "2026-11-05T12:02:06+00:00",
+      "event_count": 8,
+      "failure_count": 7,
+      "accounts": [
+        "deploy"
+      ],
+      "start": "2026-11-05T12:01:00+00:00",
+      "end": "2026-11-05T12:02:06+00:00",
+      "explanation": "Successful login after repeated failures; verify whether expected.",
+      "evidence": [
+        {
+          "timestamp": "2026-11-05T12:01:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 17,
+          "raw": "2026-11-05T12:01:00+00:00 target sshd[1016]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:25+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 22,
+          "raw": "2026-11-05T12:01:25+00:00 target sshd[1021]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 27,
+          "raw": "2026-11-05T12:02:00+00:00 target sshd[1026]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:01+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 28,
+          "raw": "2026-11-05T12:02:01+00:00 target sshd[1027]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:02+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 29,
+          "raw": "2026-11-05T12:02:02+00:00 target sshd[1028]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:03+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 30,
+          "raw": "2026-11-05T12:02:03+00:00 target sshd[1029]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:04+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 31,
+          "raw": "2026-11-05T12:02:04+00:00 target sshd[1030]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:06+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "accepted",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 32,
+          "raw": "2026-11-05T12:02:06+00:00 target sshd[1031]: Accepted password for deploy from 198.51.100.1 port 40000 ssh2"
+        }
+      ]
+    },
+    {
+      "rule": "distributed_host",
+      "severity": "medium",
+      "host": "edge",
+      "source_ip": null,
+      "triggered_at": "2026-11-05T12:04:05+00:00",
+      "event_count": 10,
+      "failure_count": 10,
+      "accounts": [
+        "invalid0",
+        "invalid1",
+        "invalid2",
+        "invalid3",
+        "invalid4",
+        "invalid5",
+        "invalid6",
+        "invalid7",
+        "invalid8",
+        "invalid9"
+      ],
+      "start": "2026-11-05T12:03:20+00:00",
+      "end": "2026-11-05T12:04:05+00:00",
+      "explanation": "Multiple sources generated authentication failures against one host. Investigate shared infrastructure and expected automation.",
+      "evidence": [
+        {
+          "timestamp": "2026-11-05T12:03:20+00:00",
+          "host": "edge",
+          "user": "invalid0",
+          "source_ip": "198.51.100.20",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 33,
+          "raw": "2026-11-05T12:03:20+00:00 edge sshd[1032]: Failed password for invalid0 from 198.51.100.20 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:25+00:00",
+          "host": "edge",
+          "user": "invalid1",
+          "source_ip": "198.51.100.21",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 34,
+          "raw": "2026-11-05T12:03:25+00:00 edge sshd[1033]: Failed password for invalid1 from 198.51.100.21 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:30+00:00",
+          "host": "edge",
+          "user": "invalid2",
+          "source_ip": "198.51.100.22",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 35,
+          "raw": "2026-11-05T12:03:30+00:00 edge sshd[1034]: Failed password for invalid2 from 198.51.100.22 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:35+00:00",
+          "host": "edge",
+          "user": "invalid3",
+          "source_ip": "198.51.100.23",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 36,
+          "raw": "2026-11-05T12:03:35+00:00 edge sshd[1035]: Failed password for invalid3 from 198.51.100.23 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:40+00:00",
+          "host": "edge",
+          "user": "invalid4",
+          "source_ip": "198.51.100.24",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 37,
+          "raw": "2026-11-05T12:03:40+00:00 edge sshd[1036]: Failed password for invalid4 from 198.51.100.24 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:45+00:00",
+          "host": "edge",
+          "user": "invalid5",
+          "source_ip": "198.51.100.20",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 38,
+          "raw": "2026-11-05T12:03:45+00:00 edge sshd[1037]: Failed password for invalid5 from 198.51.100.20 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:50+00:00",
+          "host": "edge",
+          "user": "invalid6",
+          "source_ip": "198.51.100.21",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 39,
+          "raw": "2026-11-05T12:03:50+00:00 edge sshd[1038]: Failed password for invalid6 from 198.51.100.21 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:55+00:00",
+          "host": "edge",
+          "user": "invalid7",
+          "source_ip": "198.51.100.22",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 40,
+          "raw": "2026-11-05T12:03:55+00:00 edge sshd[1039]: Failed password for invalid7 from 198.51.100.22 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:04:00+00:00",
+          "host": "edge",
+          "user": "invalid8",
+          "source_ip": "198.51.100.23",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 41,
+          "raw": "2026-11-05T12:04:00+00:00 edge sshd[1040]: Failed password for invalid8 from 198.51.100.23 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:04:05+00:00",
+          "host": "edge",
+          "user": "invalid9",
+          "source_ip": "198.51.100.24",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 42,
+          "raw": "2026-11-05T12:04:05+00:00 edge sshd[1041]: Failed password for invalid9 from 198.51.100.24 port 40000 ssh2"
+        }
+      ],
+      "source_ips": [
+        "198.51.100.20",
+        "198.51.100.21",
+        "198.51.100.22",
+        "198.51.100.23",
+        "198.51.100.24"
+      ]
+    }
+  ],
+  "incidents": [
+    {
+      "id": "AT-0001",
+      "host": "target",
+      "start": "2026-11-05T12:01:00+00:00",
+      "end": "2026-11-05T12:02:06+00:00",
+      "severity": "high",
+      "source_ips": [
+        "198.51.100.1",
+        "198.51.100.2",
+        "198.51.100.3",
+        "198.51.100.4",
+        "198.51.100.5"
+      ],
+      "accounts": [
+        "deploy"
+      ],
+      "finding_indexes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "rules": [
+        "distributed_account",
+        "distributed_host",
+        "repeated_failures",
+        "success_after_failures"
+      ],
+      "event_count": 16,
+      "timeline": [
+        {
+          "timestamp": "2026-11-05T12:01:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 17,
+          "raw": "2026-11-05T12:01:00+00:00 target sshd[1016]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:05+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.2",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 18,
+          "raw": "2026-11-05T12:01:05+00:00 target sshd[1017]: Failed password for deploy from 198.51.100.2 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:10+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.3",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 19,
+          "raw": "2026-11-05T12:01:10+00:00 target sshd[1018]: Failed password for deploy from 198.51.100.3 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:15+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.4",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 20,
+          "raw": "2026-11-05T12:01:15+00:00 target sshd[1019]: Failed password for deploy from 198.51.100.4 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:20+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.5",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 21,
+          "raw": "2026-11-05T12:01:20+00:00 target sshd[1020]: Failed password for deploy from 198.51.100.5 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:25+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 22,
+          "raw": "2026-11-05T12:01:25+00:00 target sshd[1021]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:30+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.2",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 23,
+          "raw": "2026-11-05T12:01:30+00:00 target sshd[1022]: Failed password for deploy from 198.51.100.2 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:35+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.3",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 24,
+          "raw": "2026-11-05T12:01:35+00:00 target sshd[1023]: Failed password for deploy from 198.51.100.3 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:40+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.4",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 25,
+          "raw": "2026-11-05T12:01:40+00:00 target sshd[1024]: Failed password for deploy from 198.51.100.4 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:01:45+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.5",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 26,
+          "raw": "2026-11-05T12:01:45+00:00 target sshd[1025]: Failed password for deploy from 198.51.100.5 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:00+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 27,
+          "raw": "2026-11-05T12:02:00+00:00 target sshd[1026]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:01+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 28,
+          "raw": "2026-11-05T12:02:01+00:00 target sshd[1027]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:02+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 29,
+          "raw": "2026-11-05T12:02:02+00:00 target sshd[1028]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:03+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 30,
+          "raw": "2026-11-05T12:02:03+00:00 target sshd[1029]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:04+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 31,
+          "raw": "2026-11-05T12:02:04+00:00 target sshd[1030]: Failed password for deploy from 198.51.100.1 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:02:06+00:00",
+          "host": "target",
+          "user": "deploy",
+          "source_ip": "198.51.100.1",
+          "outcome": "accepted",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 32,
+          "raw": "2026-11-05T12:02:06+00:00 target sshd[1031]: Accepted password for deploy from 198.51.100.1 port 40000 ssh2"
+        }
+      ]
+    },
+    {
+      "id": "AT-0002",
+      "host": "edge",
+      "start": "2026-11-05T12:03:20+00:00",
+      "end": "2026-11-05T12:04:05+00:00",
+      "severity": "medium",
+      "source_ips": [
+        "198.51.100.20",
+        "198.51.100.21",
+        "198.51.100.22",
+        "198.51.100.23",
+        "198.51.100.24"
+      ],
+      "accounts": [
+        "invalid0",
+        "invalid1",
+        "invalid2",
+        "invalid3",
+        "invalid4",
+        "invalid5",
+        "invalid6",
+        "invalid7",
+        "invalid8",
+        "invalid9"
+      ],
+      "finding_indexes": [
+        4
+      ],
+      "rules": [
+        "distributed_host"
+      ],
+      "event_count": 10,
+      "timeline": [
+        {
+          "timestamp": "2026-11-05T12:03:20+00:00",
+          "host": "edge",
+          "user": "invalid0",
+          "source_ip": "198.51.100.20",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 33,
+          "raw": "2026-11-05T12:03:20+00:00 edge sshd[1032]: Failed password for invalid0 from 198.51.100.20 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:25+00:00",
+          "host": "edge",
+          "user": "invalid1",
+          "source_ip": "198.51.100.21",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 34,
+          "raw": "2026-11-05T12:03:25+00:00 edge sshd[1033]: Failed password for invalid1 from 198.51.100.21 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:30+00:00",
+          "host": "edge",
+          "user": "invalid2",
+          "source_ip": "198.51.100.22",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 35,
+          "raw": "2026-11-05T12:03:30+00:00 edge sshd[1034]: Failed password for invalid2 from 198.51.100.22 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:35+00:00",
+          "host": "edge",
+          "user": "invalid3",
+          "source_ip": "198.51.100.23",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 36,
+          "raw": "2026-11-05T12:03:35+00:00 edge sshd[1035]: Failed password for invalid3 from 198.51.100.23 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:40+00:00",
+          "host": "edge",
+          "user": "invalid4",
+          "source_ip": "198.51.100.24",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 37,
+          "raw": "2026-11-05T12:03:40+00:00 edge sshd[1036]: Failed password for invalid4 from 198.51.100.24 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:45+00:00",
+          "host": "edge",
+          "user": "invalid5",
+          "source_ip": "198.51.100.20",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 38,
+          "raw": "2026-11-05T12:03:45+00:00 edge sshd[1037]: Failed password for invalid5 from 198.51.100.20 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:50+00:00",
+          "host": "edge",
+          "user": "invalid6",
+          "source_ip": "198.51.100.21",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 39,
+          "raw": "2026-11-05T12:03:50+00:00 edge sshd[1038]: Failed password for invalid6 from 198.51.100.21 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:03:55+00:00",
+          "host": "edge",
+          "user": "invalid7",
+          "source_ip": "198.51.100.22",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 40,
+          "raw": "2026-11-05T12:03:55+00:00 edge sshd[1039]: Failed password for invalid7 from 198.51.100.22 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:04:00+00:00",
+          "host": "edge",
+          "user": "invalid8",
+          "source_ip": "198.51.100.23",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 41,
+          "raw": "2026-11-05T12:04:00+00:00 edge sshd[1040]: Failed password for invalid8 from 198.51.100.23 port 40000 ssh2"
+        },
+        {
+          "timestamp": "2026-11-05T12:04:05+00:00",
+          "host": "edge",
+          "user": "invalid9",
+          "source_ip": "198.51.100.24",
+          "outcome": "failed",
+          "method": "password",
+          "file": "examples/scenarios.log",
+          "line": 42,
+          "raw": "2026-11-05T12:04:05+00:00 edge sshd[1041]: Failed password for invalid9 from 198.51.100.24 port 40000 ssh2"
+        }
+      ]
+    }
+  ]
+}

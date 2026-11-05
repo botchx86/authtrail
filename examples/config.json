@@ -1,0 +1,11 @@
+{
+  "window": 300,
+  "failures": 5,
+  "users": 5,
+  "distributed_sources": 5,
+  "distributed_failures": 10,
+  "distributed_window": 300,
+  "incident_gap": 300,
+  "exclude_source": ["203.0.113.0/28"],
+  "exclude_user": ["backup"]
+}

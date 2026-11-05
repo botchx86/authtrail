@@ -1,0 +1,13 @@
+2026-11-01T12:00:00Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:01Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:02Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:03Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:04Z web01 sshd[42]: Failed password for deploy from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:05Z web01 sshd[42]: Accepted password for deploy from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:10Z web01 sshd[42]: Failed password for user0 from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:11Z web01 sshd[42]: Failed password for user1 from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:12Z web01 sshd[42]: Failed password for user2 from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:13Z web01 sshd[42]: Failed password for user3 from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:14Z web01 sshd[42]: Failed password for user4 from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:30Z web01 sshd[42]: Failed password for alice from 192.0.2.45 port 22 ssh2
+2026-11-01T12:00:31Z web01 sshd[42]: Accepted password for alice from 192.0.2.45 port 22 ssh2

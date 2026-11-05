@@ -1,0 +1,5 @@
+{
+  "distributed_window": 3600,
+  "distributed_sources": 5,
+  "distributed_failures": 10
+}
