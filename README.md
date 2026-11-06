@@ -7,7 +7,7 @@ Offline OpenSSH authentication investigation CLI. Python 3.10–3.14, Linux; no 
 Requires Linux and Python 3.10–3.14. Install the versioned release in an isolated tool environment with [pipx](https://pipx.pypa.io/):
 
 ```sh
-pipx install https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+pipx install https://github.com/botchx86/authtrail/releases/download/v0.4.3/authtrail-0.4.3-py3-none-any.whl
 authtrail --version
 authtrail --help
 ```
@@ -17,14 +17,14 @@ If `authtrail` is not on your PATH, run `pipx ensurepath` and reopen your termin
 With [uv](https://docs.astral.sh/uv/), use:
 
 ```sh
-uv tool install https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+uv tool install https://github.com/botchx86/authtrail/releases/download/v0.4.3/authtrail-0.4.3-py3-none-any.whl
 ```
 
 Or use Python's built-in virtual environment support:
 
 ```sh
 python3 -m venv ~/.venvs/authtrail
-~/.venvs/authtrail/bin/python -m pip install https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
+~/.venvs/authtrail/bin/python -m pip install https://github.com/botchx86/authtrail/releases/download/v0.4.3/authtrail-0.4.3-py3-none-any.whl
 ~/.venvs/authtrail/bin/authtrail --help
 ```
 
@@ -39,10 +39,10 @@ No root privileges or API keys are needed when you have read access to the expor
 ### Download and verify a release
 
 ```sh
-curl -fLO https://github.com/botchx86/authtrail/releases/download/v0.4.2/authtrail-0.4.2-py3-none-any.whl
-curl -fLO https://github.com/botchx86/authtrail/releases/download/v0.4.2/SHA256SUMS
+curl -fLO https://github.com/botchx86/authtrail/releases/download/v0.4.3/authtrail-0.4.3-py3-none-any.whl
+curl -fLO https://github.com/botchx86/authtrail/releases/download/v0.4.3/SHA256SUMS
 sha256sum --ignore-missing --check SHA256SUMS
-pipx install ./authtrail-0.4.2-py3-none-any.whl
+pipx install ./authtrail-0.4.3-py3-none-any.whl
 ```
 
 Checksums detect corrupted downloads; they are not independently signed provenance. The release also includes a source distribution.
@@ -52,7 +52,7 @@ Checksums detect corrupted downloads; they are not independently signed provenan
 ```sh
 git clone https://github.com/botchx86/authtrail.git
 cd authtrail
-git checkout v0.4.2
+git checkout v0.4.3
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install .
@@ -127,3 +127,5 @@ Incident grouping uses per-entity interval representatives, with only the genuin
 See [SUPPORT.md](SUPPORT.md) for supported versions and deployment acceptance, [CONTRIBUTING.md](CONTRIBUTING.md) for local checks and fixture requirements, and [RELEASING.md](RELEASING.md) for the release procedure. Bug reports have a structured template. Tagged releases are tested and packaged automatically into a draft for maintainer review.
 
 PyPI publication requires verified project ownership and trusted-publisher setup; installation from the GitHub release remains the documented method. External human review and representative real-world log validation remain open acceptance activities, not completed audits.
+
+See [BETA.md](BETA.md) for reproducible acceptance checks and privacy-safe feedback.

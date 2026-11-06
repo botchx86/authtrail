@@ -1,0 +1,27 @@
+name: Beta feedback
+description: Report installation or operational usability results without sensitive logs
+body:
+  - type: markdown
+    attributes:
+      value: Follow BETA.md. Do not attach real logs, evidence reports, credentials or personal data.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and installation
+      description: Tool/Python version, Linux distribution and installation command.
+    validations:
+      required: true
+  - type: textarea
+    id: baseline
+    attributes:
+      label: Baseline and input-quality results
+      description: Did the synthetic baseline match? Include aggregate counts only.
+    validations:
+      required: true
+  - type: textarea
+    id: observations
+    attributes:
+      label: Detection and usability observations
+      description: False positives, missed known activity, runtime, confusing output and a synthetic reproduction if available.
+    validations:
+      required: true
