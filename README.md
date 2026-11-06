@@ -52,11 +52,10 @@ Checksums detect corrupted downloads; they are not independently signed provenan
 ```sh
 git clone https://github.com/botchx86/authtrail.git
 cd authtrail
-git checkout v0.4.3
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install .
-authtrail examples/scenarios.log --year 2026 --config examples/config.json \
+authtrail examples/logs/scenarios.log --year 2026 --config examples/config/config.json \
   --strict --compact-json --json report.json --html report.html
 ```
 
@@ -79,7 +78,7 @@ Grouping defaults to shared sources and a 300-second gap, with explicit pairwise
 JSON keys: `window`, `failures`, `users`, `distributed_sources`, `distributed_failures`, `distributed_window`, `incident_gap`, `exclude_source`, `exclude_user`. Numeric values must be positive integers. Exclusion values are lists of IP/CIDR strings or exact case-sensitive account names. Unknown keys are rejected. CLI flags override individual saved settings; exclusion flags replace the corresponding saved list.
 
 ```sh
-authtrail examples/scenarios.log --year 2026 --config examples/config.json \
+authtrail examples/logs/scenarios.log --year 2026 --config examples/config/config.json \
   --distributed-window 3600 --group-by source --strict --min-events 10
 ```
 
@@ -114,7 +113,7 @@ Tests cover core rules, boundaries, isolation, malformed input, compressed files
 
 Examples are synthetic, not sanitized production logs. `scenarios.log` covers benign retries, shared NAT, excluded backup automation, distributed attempts, subsequent success and slow attempts. Default example settings yield six findings in two investigations; a one-hour distributed window additionally detects the slow attempts. This is not a measured production false-positive rate.
 
-See `VALIDATION.md` for measured checks and remaining deployment acceptance work.
+See `docs/validation.md` for measured checks and remaining deployment acceptance work.
 
 ## v0.4.1 hardening
 
@@ -124,8 +123,23 @@ Incident grouping uses per-entity interval representatives, with only the genuin
 
 ## Support and contributions
 
-See [SUPPORT.md](SUPPORT.md) for supported versions and deployment acceptance, [CONTRIBUTING.md](CONTRIBUTING.md) for local checks and fixture requirements, and [RELEASING.md](RELEASING.md) for the release procedure. Bug reports have a structured template. Tagged releases are tested and packaged automatically into a draft for maintainer review.
+See [docs/support.md](docs/support.md) for supported versions and deployment acceptance, [CONTRIBUTING.md](CONTRIBUTING.md) for local checks and fixture requirements, and [docs/releasing.md](docs/releasing.md) for the release procedure. Bug reports have a structured template. Tagged releases are tested and packaged automatically into a draft for maintainer review.
 
 PyPI publication requires verified project ownership and trusted-publisher setup; installation from the GitHub release remains the documented method. External human review and representative real-world log validation remain open acceptance activities, not completed audits.
 
-See [BETA.md](BETA.md) for reproducible acceptance checks and privacy-safe feedback.
+See [docs/beta.md](docs/beta.md) for reproducible acceptance checks and privacy-safe feedback.
+
+## Repository layout
+
+```text
+src/authtrail/       CLI, parsing, detection, investigation and report modules
+tests/               Unit, regression, adversarial and reference tests
+docs/                Beta acceptance, support, release and validation guides
+examples/logs/       Synthetic OpenSSH input logs
+examples/config/     Example rule settings
+examples/reports/    Generated sample JSON and HTML reports
+scripts/             Developer benchmark tools
+.github/             CI, release workflows and contribution templates
+```
+
+For development, run `python -m pip install -e .` before invoking the CLI or tests. The `src` layout keeps tests from accidentally importing an uninstalled checkout. Released installation commands above remain versioned; source-checkout commands use the current branch layout.

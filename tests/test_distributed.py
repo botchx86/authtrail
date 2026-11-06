@@ -10,7 +10,7 @@ from authtrail.cli import main, investigate, parse_line
 from authtrail.config import load_config
 from authtrail.detection import investigate_distributed
 from authtrail.incidents import group_incidents
-from test_authtrail import event
+from test_core import event
 
 
 def attack(count=10, spacing=1, host='host', user='admin'):
@@ -77,7 +77,7 @@ class ConfigAndFixtureTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as tmp:
             output=Path(tmp)/'report.json'
-            args=[str(root/'examples/scenarios.log'),'--year','2026','--config',str(root/'examples/config.json'),'--json',str(output),'--html',str(Path(tmp)/'report.html')]
+            args=[str(root/'examples/logs/scenarios.log'),'--year','2026','--config',str(root/'examples/config/config.json'),'--json',str(output),'--html',str(Path(tmp)/'report.html')]
             with contextlib.redirect_stdout(io.StringIO()): self.assertEqual(main(args),0)
             report=json.loads(output.read_text())
             self.assertEqual(report['schema_version'],3)

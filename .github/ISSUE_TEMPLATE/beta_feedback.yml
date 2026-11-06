@@ -3,7 +3,7 @@ description: Report installation or operational usability results without sensit
 body:
   - type: markdown
     attributes:
-      value: Follow BETA.md. Do not attach real logs, evidence reports, credentials or personal data.
+      value: Follow docs/beta.md. Do not attach real logs, evidence reports, credentials or personal data.
   - type: textarea
     id: environment
     attributes:

@@ -10,7 +10,7 @@ cd authtrail
 python3 -m venv .venv
 . .venv/bin/activate
 python -m pip install .
-authtrail examples/scenarios.log --year 2026 --config examples/config.json --strict --compact-json --json beta.json --html beta.html
+authtrail examples/logs/scenarios.log --year 2026 --config examples/config/config.json --strict --compact-json --json beta.json --html beta.html
 ```
 
 Expected: 44 retained events, eight excluded events, six findings and two investigations. `office` and `slow` should not trigger. Adding `--distributed-window 3600` should include the slow scenario.

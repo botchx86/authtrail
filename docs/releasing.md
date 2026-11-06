@@ -1,6 +1,6 @@
 # Releasing
 
-1. Update pyproject.toml and authtrail/__init__.py to the same version.
+1. Update pyproject.toml and src/authtrail/__init__.py to the same version.
 2. Run supported-version tests and update documentation/validation evidence.
 3. Push main and verify CI. Create and push an annotated vVERSION tag on the reviewed commit.
 4. The release workflow independently tests all supported runtimes, builds and checks source/wheel metadata, tests the source distribution, installs the wheel outside the checkout and computes SHA256SUMS. It creates a draft GitHub release with those assets.

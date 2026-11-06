@@ -5,7 +5,7 @@ from dataclasses import replace
 from datetime import datetime, timedelta
 from authtrail.detection import investigate, distributed_success
 from authtrail.incidents import group_incidents
-from test_authtrail import event
+from test_core import event
 
 class ReferenceTests(unittest.TestCase):
     def test_success_rules_against_list_reference(self):

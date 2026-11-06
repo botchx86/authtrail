@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: '${{ matrix.python }}'
+      - run: python -m pip install -e .
       - run: python -m unittest discover -s tests -v
   package:
     needs: test
@@ -29,6 +30,7 @@ jobs:
         with:
           python-version: '3.14'
       - run: python -m pip install build twine
+      - run: python -m pip install -e .
       - name: Verify tag and versions
         run: |
           python - <<'PY'
@@ -44,12 +46,12 @@ jobs:
         run: |
           mkdir /tmp/source-check
           tar -xzf dist/*.tar.gz -C /tmp/source-check
-          (cd /tmp/source-check/* && python -m unittest discover -s tests -v)
+          (cd /tmp/source-check/* && python -m pip install . && python -m unittest discover -s tests -v)
           python -m venv /tmp/release-check
           /tmp/release-check/bin/pip install dist/*.whl
           cd /tmp
           /tmp/release-check/bin/authtrail --version
-          /tmp/release-check/bin/authtrail "$GITHUB_WORKSPACE/examples/scenarios.log" --year 2026 --strict --json /tmp/report.json
+          /tmp/release-check/bin/authtrail "$GITHUB_WORKSPACE/examples/logs/scenarios.log" --year 2026 --strict --json /tmp/report.json
       - name: Create draft release with checksums
         env:
           GH_TOKEN: ${{ github.token }}

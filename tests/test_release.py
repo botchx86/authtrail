@@ -7,7 +7,7 @@ import unittest
 from authtrail.cli import main
 from authtrail.config import load_config
 from authtrail.reporting import compact_report
-from test_authtrail import event
+from test_core import event
 
 class ReleaseTests(unittest.TestCase):
     def test_model_records_are_not_shared_mutable_state(self):

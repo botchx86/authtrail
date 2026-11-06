@@ -12,8 +12,8 @@ from authtrail.cli import main, investigate
 from authtrail.storage import atomic_write, check_outputs
 from authtrail.detection import distributed_success
 from authtrail.incidents import group_incidents
-from test_authtrail import event
-from test_v03 import attack
+from test_core import event
+from test_distributed import attack
 
 class RegressionTests(unittest.TestCase):
     def test_hardlinks_rejected(self):
