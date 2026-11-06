@@ -121,3 +121,9 @@ See `VALIDATION.md` for measured checks and remaining deployment acceptance work
 Inputs must be regular UTF-8 files (plain or gzip); invalid encoding fails instead of silently modifying evidence. `--max-input-bytes` limits total decompressed input to 256 MiB by default, including ignored and duplicate lines. Event and line limits still apply separately. FIFOs and other non-regular inputs are rejected.
 
 Incident grouping uses per-entity interval representatives, with only the genuine relationships needed to connect each group. This avoids constructing a quadratic graph for dense overlapping findings. Duplicate JSON configuration keys are rejected to prevent ambiguous settings. The test suite includes independent randomized reference comparisons and injected storage failures.
+
+## Support and contributions
+
+See [SUPPORT.md](SUPPORT.md) for supported versions and deployment acceptance, [CONTRIBUTING.md](CONTRIBUTING.md) for local checks and fixture requirements, and [RELEASING.md](RELEASING.md) for the release procedure. Bug reports have a structured template. Tagged releases are tested and packaged automatically into a draft for maintainer review.
+
+PyPI publication requires verified project ownership and trusted-publisher setup; installation from the GitHub release remains the documented method. External human review and representative real-world log validation remain open acceptance activities, not completed audits.

@@ -1,0 +1,26 @@
+name: Bug report
+description: Report an installation, parsing, detection or reporting problem
+body:
+  - type: markdown
+    attributes:
+      value: Do not paste sensitive logs or credentials. Use invented usernames and documentation IP ranges. See SECURITY.md for vulnerabilities.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: AuthTrail version, Python version, Linux distribution and installation method.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Exact command and minimal synthetic input, with sensitive paths removed.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
